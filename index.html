@@ -59,12 +59,26 @@
 
   footer { background:#2e7d32; color:white; text-align:center; padding:15px; font-size:0.9rem; }
 
+  /* Login/Register cards */
+  .form-container { position:relative; text-align:center; }
+  .login-box, .register-box {
+    display:none;
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  }
+  .active-form { display:block; }
+
+  .switch-link { color:#2e7d32; font-weight:600; cursor:pointer; text-decoration:none; }
+  .switch-text { margin-top:10px; text-align:center; font-size:0.95rem; }
+
   /* ===== Responsive ===== */
   @media(max-width:768px){
     .nav-links { display:none; }
     .hamburger { display:flex; }
     .navbar { padding:15px 20px; }
-    .logo { margin-left:auto; } /* push logo to right */
+    .logo { margin-left:auto; } /* logo on right */
   }
   @media(max-width:480px){
     section { padding:100px 15px 60px; }
@@ -128,13 +142,33 @@
   </ul>
 </section>
 
-<!-- Login -->
+<!-- Login & Register -->
 <section id="login">
-  <div class="card">
-    <h2>🔐 Login</h2>
-    <input type="text" placeholder="Username">
-    <input type="password" placeholder="Password">
-    <button>Login</button>
+  <div class="form-container">
+    <!-- Login box -->
+    <div class="login-box active-form" id="loginBox">
+      <h2>🔐 Login</h2>
+      <input type="text" placeholder="Username" required>
+      <input type="password" placeholder="Password" required>
+      <button>Login</button>
+      <div class="switch-text">
+        Don't have an account? <a class="switch-link" id="showRegister">Register</a>
+      </div>
+    </div>
+
+    <!-- Register box -->
+    <div class="register-box" id="registerBox">
+      <h2>📝 Register</h2>
+      <input type="text" placeholder="Full Name" required>
+      <input type="email" placeholder="Email" required>
+      <input type="text" placeholder="Username" required>
+      <input type="password" placeholder="Password" required>
+      <input type="password" placeholder="Confirm Password" required>
+      <button>Register</button>
+      <div class="switch-text">
+        Already have an account? <a class="switch-link" id="showLogin">Login</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -154,6 +188,7 @@
 <footer>&copy; 2025 Ayurvedic Recommender</footer>
 
 <script>
+  // Sidebar toggle
   const hamburger = document.getElementById('hamburger');
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('overlay');
@@ -168,6 +203,22 @@
   hamburger.addEventListener('click', toggleSidebar);
   overlay.addEventListener('click', toggleSidebar);
   document.querySelectorAll('.sidebar a').forEach(link => link.addEventListener('click', toggleSidebar));
+
+  // Login/Register toggle
+  const loginBox = document.getElementById('loginBox');
+  const registerBox = document.getElementById('registerBox');
+  const showRegister = document.getElementById('showRegister');
+  const showLogin = document.getElementById('showLogin');
+
+  showRegister.addEventListener('click', () => {
+    loginBox.classList.remove('active-form');
+    registerBox.classList.add('active-form');
+  });
+
+  showLogin.addEventListener('click', () => {
+    registerBox.classList.remove('active-form');
+    loginBox.classList.add('active-form');
+  });
 </script>
 
 </body>
