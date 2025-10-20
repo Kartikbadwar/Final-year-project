@@ -5,62 +5,70 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ayurvedic Medicine Recommendation System</title>
 <style>
-  * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:'Poppins',sans-serif; background:#f4f9f4; scroll-behavior:smooth; }
+  /* ===== Global ===== */
+  * { box-sizing: border-box; margin:0; padding:0; }
+  body { font-family:'Poppins', sans-serif; background:#f4f9f4; scroll-behavior:smooth; color:#333; }
 
   /* ===== Navbar ===== */
   .navbar {
-    position:fixed; top:0; left:0; width:100%; background:#2e7d32; color:white;
+    position: fixed; top:0; left:0; width:100%; background:#2e7d32; color:white;
     display:flex; justify-content:space-between; align-items:center;
-    padding:15px 40px; z-index:1000; box-shadow:0 2px 5px rgba(0,0,0,0.2);
+    padding:15px 50px; z-index:1000; box-shadow:0 2px 8px rgba(0,0,0,0.2);
   }
   .logo { font-weight:700; font-size:1.5rem; }
   .nav-links { list-style:none; display:flex; gap:30px; }
-  .nav-links a { color:white; text-decoration:none; font-weight:500; transition:0.3s; }
-  .nav-links a:hover { color:#c8e6c9; text-decoration:underline; }
+  .nav-links a { color:white; text-decoration:none; font-weight:500; padding:5px 10px; transition:0.3s; }
+  .nav-links a:hover { background:rgba(255,255,255,0.2); border-radius:5px; }
 
   /* Hamburger */
-  .hamburger { display:none; flex-direction:column; cursor:pointer; z-index:1100; }
+  .hamburger { display:none; flex-direction:column; cursor:pointer; }
   .hamburger div { width:25px; height:3px; background:white; margin:4px 0; border-radius:3px; }
 
   /* Sidebar + overlay for mobile */
-  .overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); display:none; z-index:900; }
+  .overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:none; z-index:900; }
   .sidebar {
-    position:fixed; top:-50%; left:-250px; width:250px; height:50%;
-    background:#2e7d32; padding-top:50px; display:flex; flex-direction:column; gap:25px;
-    transition:top 0.4s ease,left 0.4s ease; z-index:1000; border-radius:0 0 10px 0;
+    position:fixed; top:0; left:-250px; width:250px; height:100%;
+    background:#2e7d32; padding-top:60px; display:flex; flex-direction:column; gap:25px;
+    transition:left 0.4s ease; z-index:1000;
   }
-  .sidebar a { color:white; text-decoration:none; font-weight:600; padding:10px 20px; transition:0.3s; }
+  .sidebar a { color:white; text-decoration:none; font-weight:600; padding:12px 20px; transition:0.3s; }
   .sidebar a:hover { background:#256628; border-radius:5px; }
 
   /* ===== Sections ===== */
-  section { padding:120px 20px 80px; max-width:1000px; margin:auto; width:100%; text-align:center; }
-  h1,h2 { color:#2e7d32; word-wrap:break-word; }
-  #home h1 { color:#1b5e20; font-size:2.4rem; }
-  #home p { color:#444; font-size:1.2rem; margin-top:10px; }
-  button { margin-top:20px; background:#2e7d32; color:white; padding:12px 20px; border:none; border-radius:8px; cursor:pointer; font-size:1rem; transition:0.3s; }
+  section { padding:140px 20px 80px; max-width:1000px; margin:auto; text-align:center; }
+  h1,h2 { color:#2e7d32; margin-bottom:15px; }
+  h1 { font-size:2.6rem; font-weight:700; }
+  h2 { font-size:2rem; font-weight:600; }
+
+  p { font-size:1.1rem; margin-bottom:15px; }
+
+  /* Card-style sections */
+  .card { background:white; padding:25px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1); margin:20px 0; text-align:left; }
+
+  /* Buttons */
+  button { margin-top:15px; background:#2e7d32; color:white; padding:12px 25px; border:none; border-radius:8px; cursor:pointer; font-size:1rem; transition:0.3s; }
   button:hover { background:#256628; transform:translateY(-2px); }
 
-  textarea,input { width:100%; padding:12px; margin:10px 0; border:1px solid #ccc; border-radius:8px; font-size:1rem; }
-  #recommendation textarea { height:150px; }
-  #doctors li { background:#e8f5e9; margin:10px 0; padding:10px; border-left:4px solid #2e7d32; border-radius:6px; }
+  /* Inputs & textarea */
+  textarea,input { width:100%; padding:15px; margin:10px 0; border:1px solid #ccc; border-radius:8px; font-size:1rem; }
 
-  footer { background:#2e7d32; color:white; text-align:center; padding:10px; font-size:0.9rem; }
+  #recommendation textarea { height:200px; }
+
+  /* Nearby Doctors */
+  #doctors li { background:#e8f5e9; margin:10px 0; padding:15px; border-left:5px solid #2e7d32; border-radius:8px; }
+
+  footer { background:#2e7d32; color:white; text-align:center; padding:15px; font-size:0.9rem; }
 
   /* ===== Responsive ===== */
   @media(max-width:768px){
     .nav-links { display:none; }
     .hamburger { display:flex; }
-    .navbar { justify-content:space-between; }
-    .logo { order:2; font-size:1.3rem; }
-    .hamburger { order:1; }
   }
-
   @media(max-width:480px){
     section { padding:100px 15px 60px; }
-    #home h1 { font-size:2rem; }
-    #home p { font-size:1rem; }
-    #recommendation textarea { height:120px; }
+    h1 { font-size:2rem; }
+    h2 { font-size:1.6rem; }
+    #recommendation textarea { height:140px; }
   }
 </style>
 </head>
@@ -91,17 +99,21 @@
 
 <!-- Home -->
 <section id="home">
-  <h1>Welcome to Ayurvedic Medicine Recommendation System</h1>
-  <p>Discover natural remedies and holistic healing through ancient Ayurvedic wisdom.</p>
-  <button onclick="location.href='quiz.html'">Take the Quiz</button>
+  <div class="card" style="text-align:center;">
+    <h1>Welcome to Ayurvedic Medicine Recommendation System</h1>
+    <p>Discover natural remedies and holistic healing through ancient Ayurvedic wisdom.</p>
+    <button onclick="location.href='quiz.html'">Take the Quiz</button>
+  </div>
 </section>
 
 <!-- Medicine Recommendation -->
 <section id="recommendation">
-  <h2>💊 Medicine Recommendation</h2>
-  <p>Enter your symptoms to get suitable Ayurvedic remedies:</p>
-  <textarea placeholder="e.g. headache, fatigue, cold"></textarea>
-  <button>Get Recommendation</button>
+  <div class="card">
+    <h2>💊 Medicine Recommendation</h2>
+    <p>Enter your symptoms to get suitable Ayurvedic remedies:</p>
+    <textarea placeholder="e.g. headache, fatigue, cold"></textarea>
+    <button>Get Recommendation</button>
+  </div>
 </section>
 
 <!-- Nearby Doctors -->
@@ -116,21 +128,25 @@
 
 <!-- Login -->
 <section id="login">
-  <h2>🔐 Login</h2>
-  <input type="text" placeholder="Username">
-  <input type="password" placeholder="Password">
-  <button>Login</button>
+  <div class="card">
+    <h2>🔐 Login</h2>
+    <input type="text" placeholder="Username">
+    <input type="password" placeholder="Password">
+    <button>Login</button>
+  </div>
 </section>
 
 <!-- Contact -->
 <section id="contact">
-  <h2>📞 Contact Us</h2>
-  <form>
-    <input type="text" placeholder="Your Name">
-    <input type="email" placeholder="Your Email">
-    <textarea placeholder="Your Message"></textarea>
-    <button type="submit">Send Message</button>
-  </form>
+  <div class="card">
+    <h2>📞 Contact Us</h2>
+    <form>
+      <input type="text" placeholder="Your Name">
+      <input type="email" placeholder="Your Email">
+      <textarea placeholder="Your Message"></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
 </section>
 
 <footer>&copy; 2025 Ayurvedic Recommender</footer>
@@ -139,13 +155,14 @@
   const hamburger = document.getElementById('hamburger');
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('overlay');
-  let sidebarOpen = false;
+  let open = false;
+
   function toggleSidebar(){
-    sidebarOpen = !sidebarOpen;
-    sidebar.style.left = sidebarOpen ? '0' : '-250px';
-    sidebar.style.top = sidebarOpen ? '0' : '-50%';
-    overlay.style.display = sidebarOpen ? 'block' : 'none';
+    open = !open;
+    sidebar.style.left = open ? '0' : '-250px';
+    overlay.style.display = open ? 'block' : 'none';
   }
+
   hamburger.addEventListener('click', toggleSidebar);
   overlay.addEventListener('click', toggleSidebar);
   document.querySelectorAll('.sidebar a').forEach(link => link.addEventListener('click', toggleSidebar));
