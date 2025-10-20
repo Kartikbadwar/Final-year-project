@@ -8,13 +8,13 @@
     /* ===== Global Fixes ===== */
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     body {
       font-family: 'Poppins', sans-serif;
       background-color: #f4f9f4;
+      margin: 0;
+      padding: 0;
       scroll-behavior: smooth;
       overflow-x: hidden;
     }
@@ -30,10 +30,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 30px;
+      padding: 10px 40px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
       z-index: 1000;
-      flex-wrap: wrap;
     }
 
     .logo {
@@ -46,7 +45,9 @@
       list-style: none;
       display: flex;
       gap: 25px;
-      flex-wrap: wrap;
+      padding: 0;
+      margin: 0;
+      transition: max-height 0.4s ease;
     }
 
     .nav-links li a {
@@ -61,28 +62,21 @@
       color: #c8e6c9;
     }
 
-    /* ===== Responsive Navbar ===== */
-    @media (max-width: 768px) {
-      .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 10px 20px;
-      }
-
-      .nav-links {
-        flex-direction: column;
-        width: 100%;
-        gap: 10px;
-        margin-top: 10px;
-      }
-
-      .nav-links li {
-        border-top: 1px solid rgba(255,255,255,0.2);
-        padding-top: 5px;
-      }
+    /* ===== Hamburger Menu ===== */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
     }
 
-    /* ===== Section Styles ===== */
+    .bar {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      border-radius: 3px;
+    }
+
     section {
       padding: 100px 20px;
       max-width: 900px;
@@ -93,8 +87,6 @@
     h1, h2 {
       text-align: center;
       color: #2e7d32;
-      word-wrap: break-word;
-      max-width: 100%;
     }
 
     /* ===== Home Section ===== */
@@ -111,7 +103,8 @@
     #home p {
       font-size: 1.1rem;
       color: #444;
-      margin-top: 10px;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
     #home button {
@@ -134,13 +127,10 @@
     /* ===== Medicine Recommendation ===== */
     #recommendation textarea {
       width: 100%;
-      max-width: 100%;
       height: 100px;
       padding: 10px;
       border-radius: 8px;
       border: 1px solid #ccc;
-      font-size: 1rem;
-      resize: vertical;
     }
 
     #recommendation button {
@@ -171,18 +161,15 @@
       padding: 10px;
       border-left: 4px solid #2e7d32;
       border-radius: 6px;
-      font-size: 1rem;
     }
 
     /* ===== Login Section ===== */
     #login input {
       width: 100%;
-      max-width: 100%;
       padding: 10px;
       margin: 10px 0;
       border: 1px solid #ccc;
       border-radius: 8px;
-      font-size: 1rem;
     }
 
     #login button {
@@ -193,22 +180,15 @@
       border-radius: 8px;
       cursor: pointer;
       width: 100%;
-      font-size: 1rem;
-    }
-
-    #login button:hover {
-      background-color: #256628;
     }
 
     /* ===== Contact Section ===== */
     #contact input, #contact textarea {
       width: 100%;
-      max-width: 100%;
       padding: 10px;
       margin: 8px 0;
       border: 1px solid #ccc;
       border-radius: 8px;
-      font-size: 1rem;
     }
 
     #contact button {
@@ -219,14 +199,8 @@
       padding: 10px 20px;
       border-radius: 8px;
       cursor: pointer;
-      font-size: 1rem;
     }
 
-    #contact button:hover {
-      background-color: #256628;
-    }
-
-    /* ===== Footer ===== */
     footer {
       background-color: #2e7d32;
       color: white;
@@ -235,40 +209,52 @@
       font-size: 0.9rem;
     }
 
-    /* ===== Responsive Typography ===== */
+    /* ===== Responsive Design ===== */
     @media (max-width: 768px) {
-      h1 {
-        font-size: 1.6rem;
+      .menu-toggle {
+        display: flex;
       }
 
-      h2 {
-        font-size: 1.3rem;
+      .nav-links {
+        flex-direction: column;
+        width: 100%;
+        background-color: #388e3c;
+        max-height: 0;
+        overflow: hidden;
+        border-radius: 8px;
+      }
+
+      .nav-links.show {
+        max-height: 500px;
+      }
+
+      .nav-links li {
+        text-align: center;
+        padding: 10px 0;
+        width: 100%;
+      }
+
+      .navbar {
+        flex-wrap: wrap;
+        padding: 10px 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        font-size: 1.1rem;
+      }
+
+      #home h1 {
+        font-size: 1.4rem;
       }
 
       #home p {
         font-size: 1rem;
       }
 
-      #recommendation textarea {
-        height: 90px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.4rem;
-      }
-
-      .navbar {
-        padding: 8px 15px;
-      }
-
-      .logo {
-        font-size: 1.1rem;
-      }
-
-      #home button, #recommendation button {
-        font-size: 0.9rem;
+      footer {
+        font-size: 0.8rem;
       }
     }
   </style>
@@ -278,7 +264,12 @@
   <!-- ===== Navbar ===== -->
   <nav class="navbar">
     <div class="logo">🌿 Ayurvedic Recommender</div>
-    <ul class="nav-links">
+    <div class="menu-toggle" id="menu-toggle">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+    <ul class="nav-links" id="nav-links">
       <li><a href="#home">Home</a></li>
       <li><a href="#recommendation">Medicine Recommendation</a></li>
       <li><a href="#doctors">Nearby Doctors</a></li>
@@ -331,9 +322,18 @@
     </form>
   </section>
 
-  <!-- ===== Footer ===== -->
   <footer>
-    &copy; 2025 Ayurvedic Recommender | All Rights Reserved
+    &copy; 2025 Ayurvedic Recommender
   </footer>
+
+  <!-- ===== JavaScript for Menu ===== -->
+  <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const navLinks = document.getElementById('nav-links');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+    });
+  </script>
 </body>
 </html>
