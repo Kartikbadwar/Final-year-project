@@ -6,14 +6,14 @@
 <title>Ayurvedic Medicine Recommendation System</title>
 <style>
   * { box-sizing: border-box; margin:0; padding:0; }
-  body { font-family: 'Poppins', sans-serif; background:#f4f9f4; scroll-behavior: smooth; overflow-x:hidden; }
+  body { font-family:'Poppins',sans-serif; background:#f4f9f4; scroll-behavior:smooth; overflow-x:hidden; }
 
   /* Navbar */
   .navbar {
     position: fixed; top:0; left:0; width:100%;
     background:#2e7d32; color:white;
     display:flex; justify-content:space-between; align-items:center;
-    padding:15px 30px; z-index:1000; box-shadow:0 2px 5px rgba(0,0,0,0.2);
+    padding:15px 20px; z-index:1000; box-shadow:0 2px 5px rgba(0,0,0,0.2);
   }
   .logo { font-weight:700; font-size:1.3rem; }
   .nav-links { list-style:none; display:flex; gap:25px; }
@@ -29,9 +29,9 @@
 
   /* Sidebar */
   .sidebar {
-    position:fixed; top:0; left:-250px; width:250px; height:50%;
+    position:fixed; top:-50%; left:0; width:250px; height:50%;
     background:#2e7d32; padding-top:50px; display:flex; flex-direction:column; gap:25px;
-    transition: left 0.4s ease; z-index:1000; border-radius:0 0 10px 0;
+    transition: top 0.4s ease, left 0.4s ease; z-index:1000; border-radius:0 0 10px 0;
   }
   .sidebar a { color:white; text-decoration:none; font-weight:600; padding:10px 20px; transition:0.3s; }
   .sidebar a:hover { background:#256628; border-radius:5px; }
@@ -60,6 +60,9 @@
   @media(max-width:768px){
     .nav-links { display:none; }
     .hamburger { display:flex; }
+    .navbar { justify-content:space-between; }
+    .logo { order:2; }
+    .hamburger { order:1; }
   }
 </style>
 </head>
@@ -67,19 +70,10 @@
 
 <!-- Navbar -->
 <nav class="navbar">
-  <div class="logo">🌿 Ayurvedic Recommender</div>
-  <ul class="nav-links">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#recommendation">Medicine Recommendation</a></li>
-    <li><a href="#doctors">Nearby Doctors</a></li>
-    <li><a href="#login">Login</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
   <div class="hamburger" id="hamburger">
-    <div></div>
-    <div></div>
-    <div></div>
+    <div></div><div></div><div></div>
   </div>
+  <div class="logo">🌿 Ayurvedic Recommender</div>
 </nav>
 
 <!-- Sidebar -->
@@ -96,7 +90,7 @@
 <section id="home">
   <h1>Welcome to Ayurvedic Medicine Recommendation System</h1>
   <p>Discover natural remedies and holistic healing through ancient Ayurvedic wisdom.</p>
-  <button>Take the Quiz</button>
+  <button onclick="location.href='quiz.html'">Take the Quiz</button>
 </section>
 
 <!-- Medicine Recommendation -->
@@ -140,28 +134,28 @@
   &copy; 2025 Ayurvedic Recommender
 </footer>
 
-<!-- JS -->
 <script>
   const hamburger = document.getElementById('hamburger');
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('overlay');
 
-  hamburger.addEventListener('click', () => {
-    sidebar.style.left = '0';
-    overlay.style.display = 'block';
-  });
-
-  overlay.addEventListener('click', () => {
-    sidebar.style.left = '-250px';
-    overlay.style.display = 'none';
-  });
-
-  document.querySelectorAll('.sidebar a').forEach(link => {
-    link.addEventListener('click', () => {
+  let sidebarOpen = false;
+  function toggleSidebar(){
+    sidebarOpen = !sidebarOpen;
+    if(sidebarOpen){
+      sidebar.style.left = '0';
+      sidebar.style.top = '0';
+      overlay.style.display = 'block';
+    } else {
       sidebar.style.left = '-250px';
+      sidebar.style.top = '-50%';
       overlay.style.display = 'none';
-    });
-  });
+    }
+  }
+
+  hamburger.addEventListener('click', toggleSidebar);
+  overlay.addEventListener('click', toggleSidebar);
+  document.querySelectorAll('.sidebar a').forEach(link => link.addEventListener('click', toggleSidebar));
 </script>
 
 </body>
