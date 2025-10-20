@@ -5,9 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ayurvedic Medicine Recommendation System</title>
 <style>
-  /* ===== Global ===== */
   * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:'Poppins',sans-serif; background:#f4f9f4; scroll-behavior:smooth; overflow-x:hidden; }
+  body { font-family:'Poppins',sans-serif; background:#f4f9f4; scroll-behavior:smooth; }
 
   /* ===== Navbar ===== */
   .navbar {
@@ -24,7 +23,7 @@
   .hamburger { display:none; flex-direction:column; cursor:pointer; z-index:1100; }
   .hamburger div { width:25px; height:3px; background:white; margin:4px 0; border-radius:3px; }
 
-  /* Sidebar + overlay */
+  /* Sidebar + overlay for mobile */
   .overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); display:none; z-index:900; }
   .sidebar {
     position:fixed; top:-50%; left:-250px; width:250px; height:50%;
@@ -34,15 +33,16 @@
   .sidebar a { color:white; text-decoration:none; font-weight:600; padding:10px 20px; transition:0.3s; }
   .sidebar a:hover { background:#256628; border-radius:5px; }
 
-  /* Sections */
-  section { padding:120px 20px 80px; max-width:900px; margin:auto; width:100%; text-align:center; }
+  /* ===== Sections ===== */
+  section { padding:120px 20px 80px; max-width:1000px; margin:auto; width:100%; text-align:center; }
   h1,h2 { color:#2e7d32; word-wrap:break-word; }
-  #home h1 { color:#1b5e20; font-size:2.2rem; }
-  #home p { color:#444; font-size:1.1rem; margin-top:10px; }
+  #home h1 { color:#1b5e20; font-size:2.4rem; }
+  #home p { color:#444; font-size:1.2rem; margin-top:10px; }
   button { margin-top:20px; background:#2e7d32; color:white; padding:12px 20px; border:none; border-radius:8px; cursor:pointer; font-size:1rem; transition:0.3s; }
   button:hover { background:#256628; transform:translateY(-2px); }
 
-  textarea,input { width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:8px; }
+  textarea,input { width:100%; padding:12px; margin:10px 0; border:1px solid #ccc; border-radius:8px; font-size:1rem; }
+  #recommendation textarea { height:150px; }
   #doctors li { background:#e8f5e9; margin:10px 0; padding:10px; border-left:4px solid #2e7d32; border-radius:6px; }
 
   footer { background:#2e7d32; color:white; text-align:center; padding:10px; font-size:0.9rem; }
@@ -54,7 +54,13 @@
     .navbar { justify-content:space-between; }
     .logo { order:2; font-size:1.3rem; }
     .hamburger { order:1; }
-    .sidebar { top:-50%; left:-250px; }
+  }
+
+  @media(max-width:480px){
+    section { padding:100px 15px 60px; }
+    #home h1 { font-size:2rem; }
+    #home p { font-size:1rem; }
+    #recommendation textarea { height:120px; }
   }
 </style>
 </head>
