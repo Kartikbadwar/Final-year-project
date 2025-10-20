@@ -64,7 +64,7 @@
       display: none;
       flex-direction: column;
       cursor: pointer;
-      transition: transform 0.3s ease;
+      z-index: 1100;
     }
 
     .hamburger div {
@@ -72,8 +72,8 @@
       height: 3px;
       background-color: white;
       margin: 4px;
-      transition: all 0.3s ease;
       border-radius: 3px;
+      transition: all 0.3s ease;
     }
 
     /* ===== Responsive Navbar ===== */
@@ -82,41 +82,25 @@
         position: fixed;
         top: 0;
         right: -100%;
-        background-color: #2e7d32;
         height: 100vh;
-        width: 220px;
+        width: 230px;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         gap: 30px;
+        backdrop-filter: blur(12px);
+        background: rgba(46, 125, 50, 0.85);
+        box-shadow: -3px 0 8px rgba(0,0,0,0.2);
+        border-left: 2px solid rgba(255, 255, 255, 0.2);
         transition: right 0.4s ease-in-out;
       }
 
       .nav-links.active {
         right: 0;
-        animation: slideIn 0.4s ease forwards;
-      }
-
-      @keyframes slideIn {
-        from { right: -220px; opacity: 0; }
-        to { right: 0; opacity: 1; }
       }
 
       .hamburger {
         display: flex;
-      }
-
-      /* Hamburger toggle animation */
-      .hamburger.toggle div:nth-child(1) {
-        transform: rotate(45deg) translateY(8px);
-      }
-
-      .hamburger.toggle div:nth-child(2) {
-        opacity: 0;
-      }
-
-      .hamburger.toggle div:nth-child(3) {
-        transform: rotate(-45deg) translateY(-8px);
       }
     }
 
@@ -278,7 +262,7 @@
   <section id="home">
     <h1>Welcome to Ayurvedic Medicine Recommendation System</h1>
     <p>Discover natural remedies and holistic healing through ancient Ayurvedic wisdom.</p>
-    <button>Take the Quiz</button>
+    <button onclick="location.href='quiz,html'">Take the Quiz</button>
   </section>
 
   <!-- ===== Medicine Recommendation ===== -->
@@ -329,14 +313,11 @@
 
     hamburger.addEventListener('click', () => {
       navLinks.classList.toggle('active');
-      hamburger.classList.toggle('toggle');
     });
 
-    // Close menu on clicking a link
     document.querySelectorAll('.nav-links a').forEach(link => {
       link.addEventListener('click', () => {
         navLinks.classList.remove('active');
-        hamburger.classList.remove('toggle');
       });
     });
   </script>
